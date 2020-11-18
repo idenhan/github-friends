@@ -4,6 +4,8 @@ form.addEventListener("submit", function(e) {
   e.preventDefault();
 
   let search = document.getElementById("search").value;
+  let originalName = search.split(" ").join("");
 
-  alert(search);
+  alert(originalName);
+  fetch("https://api.github.com/users/"+originalName); 
 })
