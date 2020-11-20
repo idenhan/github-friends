@@ -1,3 +1,11 @@
-h2 {
-  color: #1976d2;
+.result-name {
+  font-size: 30px;
+  padding-left: 3rem;
+}
+
+@media ( min-width: 768px ) {
+  
+}
+@media ( min-width: 1024px ) {
+  
 }
