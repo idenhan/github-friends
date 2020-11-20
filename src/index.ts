@@ -3,7 +3,7 @@ import * as _ from "lodash";
 
 const form = document.getElementById("form");
 
-let user: string;
+let user: string = "";
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -18,17 +18,13 @@ form.addEventListener("submit", function (e) {
 
       const userData = data.items;
       userData.forEach((item: any) => {
-        user = `<img class="img-thumbnail ml-4" src="${item.avatar_url}"/>`;
-        // document.getElementById("result").innerHTML = user;
-        let imageSpan = document.createElement("span");
-        // let imageNode = document.createTextNode(user);
-        // image.appendChild(imageNode);
-        imageSpan.innerHTML = user;
-        let result = document.getElementById("result");
-        result.appendChild(imageSpan);
-        // result.append(user);
-        console.log(user);
+        user = `<a target="_blank" href="${item.html_url}"><img class="rounded-circle m-4" width="100" height="100" src="${item.avatar_url}"/></a>`;
 
+        let imageSpan: HTMLSpanElement = document.createElement("span");
+        imageSpan.innerHTML = user;
+        let result: HTMLElement = document.getElementById("result");
+
+        result.appendChild(imageSpan);
       })
     })
 
