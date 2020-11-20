@@ -1,18 +1,29 @@
 import "./styles.css";
 import * as _ from "lodash";
 
-const form = document.getElementById("form");
+// const form = document.getElementById("form");
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
-  // var inputValue = (<HTMLInputElement>document.getElementById(elementId)).value;
-  let username = (<HTMLInputElement>document.getElementById("username")).value;
-  alert(username);
-  let originalName = username.split(" ").join("");
+// let user;
 
-  fetch("https://api.github.com/users/" + originalName)
-    .then((result) => result.json())
-    .then((data) => {
-      console.log(data);
-    })
-})
+// form.addEventListener("submit", function (e) {
+//   e.preventDefault();
+//   let username = (<HTMLInputElement>document.getElementById("username")).value;
+
+//   let originalName = username.split(" ").join("");
+
+//   fetch("https://api.github.com/search/users?q=" + originalName + "+in:user&per_page=100")
+//     .then((result) => result.json())
+//     .then((data) => {
+//       console.log(data);
+
+//       data.items.forEach((item: any) => {
+//         user = `<img class="img-thumbnail ml-4" src="${item.avatar_url}"/>`
+//         const result = document.getElementById("result");
+
+//         result.append(user);
+//         console.log("힘들다");
+
+//       })
+//     })
+
+// })
