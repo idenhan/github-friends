@@ -1,17 +1,18 @@
 import "./styles.css";
 import * as _ from "lodash";
 
-window.addEventListener("load", () => {
-  const header = document.createElement("h1");
-  header.innerText = "Github❤️Friends"
+const form = document.getElementById("form");
 
-  const body = document.querySelector("body");
-  body.appendChild(header);
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  // var inputValue = (<HTMLInputElement>document.getElementById(elementId)).value;
+  let username = (<HTMLInputElement>document.getElementById("username")).value;
+  alert(username);
+  let originalName = username.split(" ").join("");
 
-  const food = [{ id: 0, name: "pizza" }, { id: 1, name: "sushi" }]
-
-  const foodElement = document.createElement("h2")
-  foodElement.innerText = _.find(food, { id: 0 })?.name;
-
-  body.appendChild(foodElement);
+  fetch("https://api.github.com/users/" + originalName)
+    .then((result) => result.json())
+    .then((data) => {
+      console.log(data);
+    })
 })
