@@ -13,7 +13,8 @@ export default class AppRequestInit implements RequestInit {
   }
 }
 
-const form = document.getElementById("form");
+const form: HTMLElement = document.getElementById("form");
+const local: HTMLElement = document.getElementById("local");
 
 let userImage: string = "";
 let userName: string = "";
@@ -65,4 +66,3 @@ form.addEventListener("submit", function (e) {
       })
   }
 })
-

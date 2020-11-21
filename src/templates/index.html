@@ -13,20 +13,25 @@
 
 <body>
   <div class="container">
-    <form id="form" autocomplete="off">
+    <nav>
       <h1 class="text-center mt-4">Github Friends</h1>
       <div class="row text-center">
-        <div class="col ml-3">API</div>
-        <div class="col mr-3">LOCAL</div>
+        <div class="col ml-3">
+          <button id="api">API</button>
+        </div>
+        <div class="col mr-3">
+          <button id="local">LOCAL</button>
+        </div>
       </div>
-      <div class="form-group pt-2">
-        <input type="text" id="username" placeholder="Search username" class="form-searchbar form-control">
-        <i class="fas fa-search"></i>
-      </div>
-      <div class="form-group">
-        <button class="form-search-btn btn btn-danger btn-block">Search</button>
-      </div>
-    </form>
+      <form id="form" autocomplete="off">
+        <div class="form-group pt-2">
+          <input type="text" id="username" placeholder="Search username" class="form-searchbar form-control">
+        </div>
+        <div class="form-group">
+          <button class="form-search-btn btn btn-danger btn-block">Search</button>
+        </div>
+      </form>
+    </nav>
     <div id="result">
 
     </div>
