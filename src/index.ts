@@ -36,16 +36,24 @@ form.addEventListener("submit", function (e) {
             .then((nameData: any) => {
               console.log(nameData);
 
+
+              userName = nameData.name;
+              console.log(userName);
+              let nameSpan: HTMLSpanElement = document.createElement("span");
+              nameSpan.className = "result-name";
+              let nameSpanChild: Text = document.createTextNode(userName);
+              nameSpan.appendChild(nameSpanChild);
+              imageSpan.appendChild(nameSpan);
+              let result: HTMLElement = document.getElementById("result");
+
+              result.appendChild(imageSpan);
+
             })
-          let nameSpan: HTMLSpanElement = document.createElement("span");
-          nameSpan.className = "result-name";
-          let nameSpanChild: Text = document.createTextNode(username);
-          nameSpan.appendChild(nameSpanChild);
 
-          imageSpan.appendChild(nameSpan);
-          let result: HTMLElement = document.getElementById("result");
 
-          result.appendChild(imageSpan);
+
+
+
           // result.appendChild(nameSpan);
         })
       })
