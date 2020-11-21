@@ -56,27 +56,27 @@ form.addEventListener("submit", function (e): void {
               console.log(userName);
 
               let nameSpan: HTMLSpanElement = document.createElement("span");
-              nameSpan.className = "col-6 result-name";
+              nameSpan.className = "col-7 result-name";
               let nameSpanChild: Text = document.createTextNode(userName);
               nameSpan.appendChild(nameSpanChild);
 
               imageSpan.appendChild(nameSpan);
 
-              let favStarInput: HTMLInputElement = document.createElement("input");
-              favStarInput.type = "hidden";
-              favStarInput.name = "rating";
-              favStarInput.id = "rating";
+              // let favStarInput: HTMLInputElement = document.createElement("input");
+              // favStarInput.type = "hidden";
+              // favStarInput.name = "rating";
+              // favStarInput.id = "rating";
 
               // let favStarUl: HTMLUListElement = document.createElement("ul");
 
               let favStarLi: HTMLLIElement = document.createElement("li");
-              favStarLi.className = "col-2 ml-3 fav";
+              favStarLi.className = "col-2 fav";
               let favStarLiChild: Text = document.createTextNode("★");
               favStarLi.appendChild(favStarLiChild);
 
               // favStarUl.appendChild(favStarLi);
 
-              imageSpan.appendChild(favStarInput);
+              // imageSpan.appendChild(favStarInput);
               imageSpan.appendChild(favStarLi);
 
               let result: HTMLElement = document.getElementById("result");
