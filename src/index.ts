@@ -20,7 +20,7 @@ let userImage: string = "";
 let userName: string = "";
 let userData: any;
 
-form.addEventListener("submit", function (e) {
+form.addEventListener("submit", function (e): void {
   e.preventDefault();
   let username = (<HTMLInputElement>document.getElementById("username")).value;
 
@@ -41,8 +41,11 @@ form.addEventListener("submit", function (e) {
           console.log(userName);
 
           let imageSpan: HTMLSpanElement = document.createElement("div");
-          imageSpan.className = "result-image mt-3 mb-3";
-          imageSpan.innerHTML = userImage;
+          imageSpan.className = "row result-wrapper mt-3 mb-3";
+          let imageSpanChild: HTMLSpanElement = document.createElement("span");
+          imageSpanChild.className = "col-3 result-image";
+          imageSpanChild.innerHTML = userImage;
+          imageSpan.appendChild(imageSpanChild);
 
           fetch("https://api.github.com/users/" + userName, new AppRequestInit())
             .then((nameResult: Response) => nameResult.json())
@@ -53,11 +56,29 @@ form.addEventListener("submit", function (e) {
               console.log(userName);
 
               let nameSpan: HTMLSpanElement = document.createElement("span");
-              nameSpan.className = "result-name";
+              nameSpan.className = "col-6 result-name";
               let nameSpanChild: Text = document.createTextNode(userName);
               nameSpan.appendChild(nameSpanChild);
 
               imageSpan.appendChild(nameSpan);
+
+              let favStarInput: HTMLInputElement = document.createElement("input");
+              favStarInput.type = "hidden";
+              favStarInput.name = "rating";
+              favStarInput.id = "rating";
+
+              // let favStarUl: HTMLUListElement = document.createElement("ul");
+
+              let favStarLi: HTMLLIElement = document.createElement("li");
+              favStarLi.className = "col-2 fav";
+              let favStarLiChild: Text = document.createTextNode("★");
+              favStarLi.appendChild(favStarLiChild);
+
+              // favStarUl.appendChild(favStarLi);
+
+              imageSpan.appendChild(favStarInput);
+              imageSpan.appendChild(favStarLi);
+
               let result: HTMLElement = document.getElementById("result");
 
               result.appendChild(imageSpan);
@@ -65,4 +86,14 @@ form.addEventListener("submit", function (e) {
         })
       })
   }
+})
+
+function addFavourite(): void {
+
+}
+
+local.addEventListener("submit", function (e) {
+  e.preventDefault();
+
+
 })

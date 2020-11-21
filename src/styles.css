@@ -3,6 +3,7 @@ nav {
   position: sticky;
   top: 0;
   background: white;
+  z-index: 1;
 }
 
 .col {
@@ -34,9 +35,26 @@ nav {
   border-bottom: 0.2rem solid #dd3444;
 }
 
+.result-wrapper {
+  display: flex;
+  align-items: center;
+}
+
 .result-name {
   font-size: 1.6rem;
-  padding-left: 2rem;
+  text-align: center;
+}
+
+ul {
+  width: 0;
+}
+
+li {
+  float: left;
+  display: inline-block;
+  color: #F0F0F0;
+  text-shadow: 0 0 1px #666666;
+  font-size: 30px;
 }
 
 @media ( min-width: 768px ) {
