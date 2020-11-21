@@ -38,10 +38,12 @@ nav {
 .result-wrapper {
   display: flex;
   align-items: center;
+  border-bottom: 1px solid #eee;
 }
 
 .result-name {
   font-size: 1.6rem;
+  width: 120%;
   text-align: center;
 }
 
@@ -50,11 +52,15 @@ ul {
 }
 
 li {
-  float: left;
   display: inline-block;
   color: #F0F0F0;
   text-shadow: 0 0 1px #666666;
   font-size: 30px;
+}
+
+li:hover {
+  color: gold;
+  text-shadow: 0 0 1px gold;
 }
 
 @media ( min-width: 768px ) {

@@ -41,7 +41,7 @@ form.addEventListener("submit", function (e): void {
           console.log(userName);
 
           let imageSpan: HTMLSpanElement = document.createElement("div");
-          imageSpan.className = "row result-wrapper mt-3 mb-3";
+          imageSpan.className = "row result-wrapper pt-3 pb-3";
           let imageSpanChild: HTMLSpanElement = document.createElement("span");
           imageSpanChild.className = "col-3 result-image";
           imageSpanChild.innerHTML = userImage;
@@ -70,7 +70,7 @@ form.addEventListener("submit", function (e): void {
               // let favStarUl: HTMLUListElement = document.createElement("ul");
 
               let favStarLi: HTMLLIElement = document.createElement("li");
-              favStarLi.className = "col-2 fav";
+              favStarLi.className = "col-2 ml-3 fav";
               let favStarLiChild: Text = document.createTextNode("★");
               favStarLi.appendChild(favStarLiChild);
 
