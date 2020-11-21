@@ -3,7 +3,8 @@ import * as _ from "lodash";
 
 const form = document.getElementById("form");
 
-let user: string = "";
+let userImage: string = "";
+let userName: string = "";
 let userData: any;
 
 form.addEventListener("submit", function (e) {
@@ -22,12 +23,20 @@ form.addEventListener("submit", function (e) {
         userData = data.items;
 
         userData.forEach((item: any) => {
-          user = `<a target="_blank" href="${item.html_url}"><img class="rounded-circle" width="80" height="80" src="${item.avatar_url}"/></a>`;
+          userImage = `<a target="_blank" href="${item.html_url}"><img class="rounded-circle" width="80" height="80" src="${item.avatar_url}"/></a>`;
+          userName = item.login;
+          console.log(userName);
 
           let imageSpan: HTMLSpanElement = document.createElement("div");
           imageSpan.className = "result-image mt-3 mb-3";
-          imageSpan.innerHTML = user;
+          imageSpan.innerHTML = userImage;
 
+          fetch("https://api.github.com/users/" + userName)
+            .then((nameResult: Response) => nameResult.json())
+            .then((nameData: any) => {
+              console.log(nameData);
+
+            })
           let nameSpan: HTMLSpanElement = document.createElement("span");
           nameSpan.className = "result-name";
           let nameSpanChild: Text = document.createTextNode(username);
