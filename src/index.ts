@@ -13,6 +13,7 @@ export default class AppRequestInit implements RequestInit {
   }
 }
 
+
 const form: HTMLElement = document.getElementById("form");
 const local: HTMLElement = document.getElementById("local");
 let fav: HTMLElement;
@@ -77,6 +78,7 @@ form.addEventListener("submit", function (e): void {
 
               let favStarLi: HTMLLIElement = document.createElement("li");
               favStarLi.className = "col-2 fav";
+              favStarLi.id = "stars";
               let favStarLiChild: Text = document.createTextNode("★");
               favStarLi.appendChild(favStarLiChild);
               fav = favStarLi;
@@ -122,3 +124,19 @@ form.addEventListener("submit", function (e): void {
 // }
 
 // a();
+
+let searchBtn: HTMLElement = document.querySelector("#search-btn");
+
+searchBtn.addEventListener("mousemove", mouseEvent);
+searchBtn.addEventListener("touchmove", touchEvent);
+
+function mouseEvent(e: any) {
+  searchBtn.style.backgroundColor = "rgb(" + e.offsetX + "," + e.offsetY + ", 60)";
+}
+
+function touchEvent(e: any) {
+  e.stopPropagation();
+  e.preventDefault();
+  searchBtn.style.backgroundColor = "rgb(" + e.offsetX + "," + e.offsetY + ", 60)";
+}
+
