@@ -130,11 +130,11 @@ let searchBtn: HTMLElement = document.querySelector("#search-btn");
 searchBtn.addEventListener("mousemove", mouseEvent);
 searchBtn.addEventListener("touchmove", touchEvent);
 
-function mouseEvent(e: any) {
+function mouseEvent(e: any): void {
   searchBtn.style.backgroundColor = "rgb(" + e.offsetX + "," + e.offsetY + ", 60)";
 }
 
-function touchEvent(e: any) {
+function touchEvent(e: any): void {
   e.stopPropagation();
   e.preventDefault();
   searchBtn.style.backgroundColor = "rgb(" + e.offsetX + "," + e.offsetY + ", 60)";
