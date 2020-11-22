@@ -15,6 +15,7 @@ export default class AppRequestInit implements RequestInit {
 
 const form: HTMLElement = document.getElementById("form");
 const local: HTMLElement = document.getElementById("local");
+let fav: HTMLElement;
 
 let userImage: string = "";
 let userName: string = "";
@@ -22,6 +23,11 @@ let userData: any;
 
 form.addEventListener("submit", function (e): void {
   e.preventDefault();
+
+  if (typeof (localStorage) === "undefined") {
+    alert("현재 웹 환경에서 작동이 제한적입니다. 크롬 혹은 다른 브라우저에서 접속해주시기 바랍니다");
+  }
+
   let username = (<HTMLInputElement>document.getElementById("username")).value;
 
   getUserData();
@@ -73,6 +79,7 @@ form.addEventListener("submit", function (e): void {
               favStarLi.className = "col-2 fav";
               let favStarLiChild: Text = document.createTextNode("★");
               favStarLi.appendChild(favStarLiChild);
+              fav = favStarLi;
 
               // favStarUl.appendChild(favStarLi);
 
@@ -88,12 +95,30 @@ form.addEventListener("submit", function (e): void {
   }
 })
 
-function addFavourite(): void {
 
-}
+// local.addEventListener("submit", function (e) {
+//   e.preventDefault();
+//   a();
 
-local.addEventListener("submit", function (e) {
-  e.preventDefault();
+//   function a() {
+//     console.log(userData);
+//     console.log(111);
+//   }
 
+// fav.onclick = function (e) {
+//   e.preventDefault();
+// }
 
-})
+// function currentAddFav() {
+
+// }
+// // })
+// local.onclick = function (e) {
+//   e.preventDefault();
+
+// }
+// function a() {
+//   local.click();
+// }
+
+// a();
