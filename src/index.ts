@@ -89,13 +89,87 @@ form.addEventListener("submit", function (e): void {
               imageSpan.appendChild(favStarLi);
 
               let result: HTMLElement = document.getElementById("result");
-
               result.appendChild(imageSpan);
             })
         })
       })
   }
 })
+
+let triggerNum = 0;
+let textInput: HTMLElement = document.querySelector('input[type="text"]');
+textInput.addEventListener("input", trigger);
+
+function trigger() {
+  triggerNum++;
+  changeTitle();
+}
+
+function changeTitle() {
+  let titleRoot: HTMLElement = document.createElement("h3");
+  titleRoot.id = "title-root";
+
+  let titleG: HTMLElement = document.createElement("span");
+  titleG.id = "title-span";
+  titleG.textContent = "G";
+  let titleI: HTMLElement = document.createElement("span");
+  titleI.id = "title-span";
+  titleI.textContent = "I";
+  let titleT: HTMLElement = document.createElement("span");
+  titleT.id = "title-span";
+  titleT.textContent = "T";
+  let titleH: HTMLElement = document.createElement("span");
+  titleH.id = "title-span";
+  titleH.textContent = "H";
+  let titleU: HTMLElement = document.createElement("span");
+  titleU.id = "title-span";
+  titleU.textContent = "U";
+  let titleB: HTMLElement = document.createElement("span");
+  titleB.id = "title-span";
+  titleB.textContent = "B";
+  let titleF: HTMLElement = document.createElement("span");
+  titleF.id = "title-span";
+  titleF.textContent = "F";
+  let titleR: HTMLElement = document.createElement("span");
+  titleR.id = "title-span";
+  titleR.textContent = "R";
+  let titleI2: HTMLElement = document.createElement("span");
+  titleI2.id = "title-span";
+  titleI2.textContent = "I";
+  let titleE: HTMLElement = document.createElement("span");
+  titleE.id = "title-span";
+  titleE.textContent = "E";
+  let titleN: HTMLElement = document.createElement("span");
+  titleN.id = "title-span";
+  titleN.textContent = "N";
+  let titleD: HTMLElement = document.createElement("span");
+  titleD.id = "title-span";
+  titleD.textContent = "D";
+  let titleS: HTMLElement = document.createElement("span");
+  titleS.id = "title-span";
+  titleS.textContent = "S";
+
+  titleRoot.appendChild(titleG);
+  titleRoot.appendChild(titleI);
+  titleRoot.appendChild(titleT);
+  titleRoot.appendChild(titleH);
+  titleRoot.appendChild(titleU);
+  titleRoot.appendChild(titleB);
+  titleRoot.appendChild(titleF);
+  titleRoot.appendChild(titleR);
+  titleRoot.appendChild(titleI2);
+  titleRoot.appendChild(titleE);
+  titleRoot.appendChild(titleN);
+  titleRoot.appendChild(titleD);
+  titleRoot.appendChild(titleS);
+
+  if (triggerNum === 1) {
+    let h3 = document.getElementById("title-wrapper");
+    h3.appendChild(titleRoot);
+    let previousHeader = document.getElementById("title-preHeader");
+    previousHeader.style.display = "none";
+  }
+}
 
 
 // local.addEventListener("submit", function (e) {
