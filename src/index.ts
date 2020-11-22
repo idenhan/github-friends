@@ -126,9 +126,9 @@ form.addEventListener("submit", function (e): void {
 // a();
 
 let searchBtn: HTMLElement = document.querySelector("#search-btn");
+searchBtn.ontouchmove = touchEvent;
 
 searchBtn.addEventListener("mousemove", mouseEvent);
-searchBtn.addEventListener("touchmove", touchEvent);
 
 function mouseEvent(e: any): void {
   searchBtn.style.backgroundColor = "rgb(" + e.offsetX + "," + e.offsetY + ", 60)";
