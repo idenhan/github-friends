@@ -64,7 +64,7 @@ form.addEventListener("submit", function (e): void {
               let nameWrapper: HTMLSpanElement = document.createElement("span");
               nameWrapper.className = "col-7 result-name";
               let nameSpan: HTMLSpanElement = document.createElement("span");
-              nameSpan.className = "pl-2 pr-2";
+              nameSpan.className = "pl-3 pr-3";
               let nameSpanChild: Text = document.createTextNode(userName);
               nameSpan.appendChild(nameSpanChild);
               nameWrapper.appendChild(nameSpan);
