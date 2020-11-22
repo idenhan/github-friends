@@ -44,7 +44,7 @@ nav {
   transition: 0.5s;
 }
 
-#search-btn:hover {
+#search-btn:focus {
   background-color: white;
   border: 1px solid #dd3444;
   color: #dd3444;
