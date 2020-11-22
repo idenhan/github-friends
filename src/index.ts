@@ -61,12 +61,15 @@ form.addEventListener("submit", function (e): void {
               userName = nameData.name;
               console.log(userName);
 
+              let nameWrapper: HTMLSpanElement = document.createElement("span");
+              nameWrapper.className = "col-7 result-name";
               let nameSpan: HTMLSpanElement = document.createElement("span");
-              nameSpan.className = "col-7 result-name";
+              nameSpan.className = "pl-2 pr-2";
               let nameSpanChild: Text = document.createTextNode(userName);
               nameSpan.appendChild(nameSpanChild);
+              nameWrapper.appendChild(nameSpan);
 
-              imageSpan.appendChild(nameSpan);
+              imageSpan.appendChild(nameWrapper);
 
               // let favStarInput: HTMLInputElement = document.createElement("input");
               // favStarInput.type = "hidden";
@@ -89,6 +92,26 @@ form.addEventListener("submit", function (e): void {
 
               let result: HTMLElement = document.getElementById("result");
               result.appendChild(imageSpan);
+
+              nameSpan.ontouchmove = moveEvent;
+              nameSpan.ontouchmove = leaveEvent;
+
+              nameSpan.addEventListener("mousemove", moveEvent);
+              nameSpan.addEventListener("mouseleave", leaveEvent)
+
+              function moveEvent(e: any): void {
+                e.stopPropagation();
+                e.preventDefault();
+                nameSpan.style.backgroundColor = "rgb(" + e.offsetX + "," + e.offsetY + ", 60)";
+                nameSpan.style.borderRadius = "3px";
+                nameSpan.style.color = "white";
+              }
+              function leaveEvent(e: any): void {
+                e.stopPropagation();
+                e.preventDefault();
+                nameSpan.style.backgroundColor = "white";
+                nameSpan.style.color = "black";
+              }
             })
         })
       })
@@ -195,21 +218,4 @@ function changeTitle() {
 // function a() {
 //   local.click();
 // }
-
-// a();
-
-let searchBtn: HTMLElement = document.querySelector("#search-btn");
-searchBtn.ontouchmove = touchEvent;
-
-searchBtn.addEventListener("mousemove", mouseEvent);
-
-function mouseEvent(e: any): void {
-  searchBtn.style.backgroundColor = "rgb(" + e.offsetX + "," + e.offsetY + ", 60)";
-}
-
-function touchEvent(e: any): void {
-  e.stopPropagation();
-  e.preventDefault();
-  searchBtn.style.backgroundColor = "rgb(" + e.offsetX + "," + e.offsetY + ", 60)";
-}
 
