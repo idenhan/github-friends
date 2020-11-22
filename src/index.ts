@@ -13,7 +13,6 @@ export default class AppRequestInit implements RequestInit {
   }
 }
 
-
 const form: HTMLElement = document.getElementById("form");
 const local: HTMLElement = document.getElementById("local");
 let fav: HTMLElement;
@@ -96,7 +95,7 @@ form.addEventListener("submit", function (e): void {
   }
 })
 
-let triggerNum = 0;
+let triggerNum: number = 0;
 let textInput: HTMLElement = document.querySelector('input[type="text"]');
 textInput.addEventListener("input", trigger);
 
