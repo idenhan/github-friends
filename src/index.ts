@@ -30,8 +30,6 @@ async function getUserData(e: any) {
     userData = data.items;
 
   } catch (err) {
-
-    // 
     console.error(err);
   }
   getUserNameAndImage();
@@ -67,6 +65,7 @@ function getUserNameAndImage(): void {
       .then((nameData: any) => {
         userName = nameData.name;
         localStorage.name = JSON.stringify(userName);
+
         let nameWrapper: HTMLSpanElement = document.createElement("span");
         nameWrapper.className = "col-7 result-name";
         let nameSpan: HTMLSpanElement = document.createElement("span");
@@ -75,6 +74,7 @@ function getUserNameAndImage(): void {
         nameSpan.appendChild(nameSpanChild);
         nameWrapper.appendChild(nameSpan);
         imageSpan.appendChild(nameWrapper);
+
         const hash = (username: string) => {
           let result: number = username.toLowerCase().charCodeAt(0);
           if (result > 30000) {
@@ -85,26 +85,32 @@ function getUserNameAndImage(): void {
           }
           return result;
         };
+
         let favStarLi: HTMLLIElement = document.createElement("li");
         favStarLi.className = "col-2 fav";
         const starWithUserName = `${item.login}-star`;
         favStarLi.id = starWithUserName;
         favStarLi.setAttribute('src', item.avatar_url);
         favStarLi.setAttribute('username', userName);
+
         if (!localStorage.userAll) {
           localStorage.userAll = JSON.stringify([]);
         }
+
         const userArr = JSON.parse(localStorage.userAll);
         if (userArr[hash(userName)] && item.login in userArr[hash(userName)]) {
           favStarLi.classList.add('sub');
         }
+
         favStarLi.onclick = (e) => starEvent(e);
         let favStarLiChild: Text = document.createTextNode("★");
         favStarLi.appendChild(favStarLiChild);
         imageSpan.appendChild(favStarLi);
         let result: HTMLElement = document.getElementById("result");
+
         const dictIndex = hash(userName);
         let dictWord = document.getElementById(String.fromCharCode(dictIndex));
+
         if (!dictWord) {
           dictWord = document.createElement('div');
           dictWord.id = String.fromCharCode(dictIndex);
@@ -126,7 +132,6 @@ function getUserNameAndImage(): void {
           } else {
             let arr = document.querySelectorAll("#result [class *='normalEngId']");
             if (front && front.charCodeAt(0) > dictIndex) {
-
               result.insertBefore(dictWord, head);
               front = String.fromCharCode(dictIndex);
             } else {
@@ -139,7 +144,6 @@ function getUserNameAndImage(): void {
               result.appendChild(dictWord);
             }
           }
-
         }
 
         nameSpan.ontouchmove = moveEvent;
@@ -155,6 +159,7 @@ function getUserNameAndImage(): void {
           nameSpan.style.borderRadius = "3px";
           nameSpan.style.color = "white";
         }
+
         function leaveEvent(e: any): void {
           e.stopPropagation();
           e.preventDefault();
@@ -174,6 +179,7 @@ function getUserNameAndImage(): void {
           let tag = document.getElementById(e.target.id);
           const url = tag.getAttribute('src');
           tag.classList.add('sub');
+
           if (userList[index] && item.login in userList[index]) {
             tag.classList.remove('sub');
             delete userList[index][item.login];
@@ -190,11 +196,11 @@ function getUserNameAndImage(): void {
         }
       })
       .catch((err: any) => {
-
         console.error(err);
       })
   })
 }
+
 api.onclick = (e) => apiEvent(e);
 local.onclick = (e) => localEvent(e);
 
@@ -237,13 +243,13 @@ function localEvent(e: any) {
       }
       return result;
     };
+
     let result2: HTMLElement = document.getElementById("result2");
 
     for (let i in el) {
       let dictDiv = document.getElementById(el[i].dictIndex);
 
       if (!dictDiv) {
-
         dictDiv = document.createElement('div');
         dictDiv.id = el[i].dictIndex;
         if (el[i].dictIndex < 4352) {
@@ -252,17 +258,18 @@ function localEvent(e: any) {
         dictDiv.innerText = String.fromCharCode(el[i].dictIndex).toUpperCase();
       }
 
-
-
       userImage = `<a target="_blank" href="#"><img class="rounded-circle" width="80" height="80" src="${el[i].url}"/></a>`;
+
       let imageSpan: HTMLSpanElement = document.createElement("div");
       imageSpan.className = "row result-wrapper pt-3 pb-3";
       imageSpan.id = el[i].id;
       imageSpan.setAttribute('username', el[i].username)
+
       let imageSpanChild: HTMLSpanElement = document.createElement("span");
       imageSpanChild.className = "col-3 result-image";
       imageSpanChild.innerHTML = userImage;
       imageSpan.appendChild(imageSpanChild);
+
       let nameWrapper: HTMLSpanElement = document.createElement("span");
       nameWrapper.className = "col-7 result-name";
       let nameSpan: HTMLSpanElement = document.createElement("span");
@@ -271,24 +278,29 @@ function localEvent(e: any) {
       nameSpan.appendChild(nameSpanChild);
       nameWrapper.appendChild(nameSpan);
       imageSpan.appendChild(nameWrapper);
+
       let favStarLi: HTMLLIElement = document.createElement("li");
       favStarLi.className = "col-2 fav";
+
       const starWithUserName = `${el[i].id}-star`;
       favStarLi.id = starWithUserName;
       favStarLi.setAttribute('src', el[i].url);
       favStarLi.setAttribute('username', el[i].username)
+
       const userArr = JSON.parse(localStorage.userAll);
       if (userArr[hash(el[i].username)] && el[i].id in userArr[hash(el[i].username)]) {
         favStarLi.classList.add('sub');
       }
+
       favStarLi.onclick = (e) => starEvent(e);
+
       let favStarLiChild: Text = document.createTextNode("★");
       favStarLi.appendChild(favStarLiChild);
 
       imageSpan.appendChild(favStarLi);
       dictDiv.appendChild(imageSpan)
-      const head = document.querySelector("#result2 [class *='normalEngId']");
 
+      const head = document.querySelector("#result2 [class *='normalEngId']");
 
       if (head && el[i].dictIndex >= 4352) {
         result2.insertBefore(dictDiv, head);
@@ -296,29 +308,29 @@ function localEvent(e: any) {
         result2.appendChild(dictDiv);
       }
     }
+
     function starEvent(e: any) {
       const uName = e.target.id.replace('-star', '');
       let tagWrapper = document.getElementById(uName);
 
       const name = tagWrapper.getAttribute('username');
-      console.log(uName, name);
 
       let dictIndex = tagWrapper.parentElement;
       let newWrapper = document.getElementById("result2")
-      console.log(dictIndex);
       dictIndex.removeChild(tagWrapper);
+
       if (dictIndex.children.length === 0) {
         newWrapper.removeChild(dictIndex);
       }
+
       let userList = JSON.parse(localStorage.userAll);
       const index = hash(name);
       let testtest = document.querySelector(`#result  [id*="${uName}"]`);
 
       if (testtest) testtest.classList.remove("sub");
-      console.log(`this is ${index}`);
+
       if (userList[index] && uName in userList[index]) {
         delete userList[index][uName];
-
         localStorage.userAll = JSON.stringify(userList);
       }
     }
@@ -337,8 +349,8 @@ function trigger(): void {
   triggerNum++;
   changeTitle();
 }
-function changeTitle(): void {
 
+function changeTitle(): void {
   let titleRoot: HTMLElement = document.createElement("h3");
   titleRoot.id = "title-root";
   let titleG: HTMLElement = document.createElement("span");
