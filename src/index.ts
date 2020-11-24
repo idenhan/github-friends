@@ -2,6 +2,7 @@
 import "../public/styles.css";
 import * as _ from "lodash";
 import AppRequestInit from "./Classes/appRequestInit";
+import { result } from "lodash";
 
 const form: HTMLElement = document.getElementById("form");
 const api: HTMLElement = document.getElementById("api");
@@ -18,6 +19,8 @@ async function getUserData(e: any) {
   e.preventDefault();
 
   const username: string | number = (<HTMLInputElement>document.getElementById("username")).value;
+
+
 
   try {
     const response = await fetch(url + "search/users?q=" + username + "+in:name&per_page=100", new AppRequestInit());
@@ -60,6 +63,13 @@ const hangulFirstCompare = (a: any, b: any) => {
 }
 
 function getUserNameAndImage(): void {
+  let a = document.querySelector("#result");
+  let b = document.getElementById("container");
+  b.removeChild(a);
+  let c = document.createElement("div");
+  c.id = "result";
+  b.appendChild(c);
+
   userData.map((item: any) => {
     userName = item.login;
     userImage = `<a target="_blank" href="${item.html_url}"><img class="rounded-circle" width="80" height="80" src="${item.avatar_url}"/></a>`;
@@ -167,7 +177,9 @@ function apiEvent(e: any) {
 
   let result2 = document.getElementById("result2");
   result2.style.display = "none";
+
 }
+
 
 function localEvent(e: any) {
   let result2 = document.getElementById("result2");
@@ -176,9 +188,86 @@ function localEvent(e: any) {
   let result = document.getElementById("result");
   result.style.display = "none";
 
+  let favArr = JSON.parse(localStorage.userAll);
+  favArr = favArr.filter((el: any) => {
+    if (el) {
+      return el;
+    }
+  });
+  console.log(favArr);
+
+
+  let b2 = document.getElementById("container");
+  b2.removeChild(result2);
+  let c2 = document.createElement("div");
+  c2.id = "result2";
+  b2.appendChild(c2);
+
+  favArr.map((el: any) => {
+    const hash = (username: string) => username.length;
+    for (let i in el) {
+      userImage = `<a target="_blank" href="#"><img class="rounded-circle" width="80" height="80" src="${el[i].url}"/></a>`;
+
+      let imageSpan: HTMLSpanElement = document.createElement("div");
+      imageSpan.className = "row result-wrapper pt-3 pb-3";
+      imageSpan.id = el[i].username;
+      let imageSpanChild: HTMLSpanElement = document.createElement("span");
+      imageSpanChild.className = "col-3 result-image";
+      imageSpanChild.innerHTML = userImage;
+      imageSpan.appendChild(imageSpanChild);
+
+      let nameWrapper: HTMLSpanElement = document.createElement("span");
+      nameWrapper.className = "col-7 result-name";
+      let nameSpan: HTMLSpanElement = document.createElement("span");
+      nameSpan.className = "pl-3 pr-3";
+      let nameSpanChild: Text = document.createTextNode(el[i].username);
+      nameSpan.appendChild(nameSpanChild);
+      nameWrapper.appendChild(nameSpan);
+      imageSpan.appendChild(nameWrapper);
+
+      let favStarLi: HTMLLIElement = document.createElement("li");
+      favStarLi.className = "col-2 fav";
+      const starWithUserName = `${el[i].username}-star`;
+      favStarLi.id = starWithUserName;
+      favStarLi.setAttribute('src', el[i].url);
+
+      const userArr = JSON.parse(localStorage.userAll);
+
+      if (userArr[hash(el[i].username)] && el[i].username in userArr[hash(el[i].username)]) {
+        favStarLi.classList.add('sub');
+      }
+      favStarLi.onclick = (e) => starEvent(e);
+
+      let favStarLiChild: Text = document.createTextNode("★");
+      favStarLi.appendChild(favStarLiChild);
+      imageSpan.appendChild(favStarLi);
+      let result2: HTMLElement = document.getElementById("result2");
+      result2.appendChild(imageSpan);
+
+    }
+
+    function starEvent(e: any) {
+      const uName = e.target.id.replace('-star', '');
+      let tagWrapper = document.getElementById(uName);
+      let newResult = document.getElementById("result2");
+      newResult.removeChild(tagWrapper);
+      let userList = JSON.parse(localStorage.userAll);
+      const index = hash(uName);
+
+      if (userList[index] && uName in userList[index]) {
+
+        delete userList[index][uName];
+        localStorage.userAll = JSON.stringify(userList);
+      }
+    }
+  })
+
+
+
   if (!localStorage.userAll) {
     alert('새로운 친구를 추가해보세요!');
   }
+
 }
 
 let triggerNum: number = 0;
