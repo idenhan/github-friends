@@ -25,7 +25,7 @@ yarn build
 
 ## Author
 
-- [Iden Han](https://idenhan.tistory.com/)
+- Iden Han
 
 ## Technologies
 
