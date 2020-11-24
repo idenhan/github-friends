@@ -1,5 +1,4 @@
 body {
-  /* font-family: "Times New Roman", Times, serif; */
   font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 
@@ -70,14 +69,10 @@ li {
   font-size: 30px;
 }
 
-li:hover {
+.sub {
   color: gold;
   text-shadow: 0 0 1px gold;
 }
-
-/* @media ( min-width: 768px) {}
-
-@media ( min-width: 1024px) {} */
 
 #title-root span {
   color: #262626;

@@ -1,188 +1,41 @@
+"use strict"
 import "../public/styles.css";
 import * as _ from "lodash";
 import AppRequestInit from "./Classes/appRequestInit";
 import IsUser from "./Interfaces/isUser";
 
-
-// https://gomakethings.com/preventing-cross-site-scripting-attacks-when-using-innerhtml-in-vanilla-javascript/
-// innerHTML 지워야되고.
-// 렌더 속도 개선
-// 타입 문법 interface, return 값 void.
-// 검색결과 없을 때 sort
-// 로딩창
-// 헤더
-// async
-// try catch (error handler 무조건!!!!)
-// 한글 먼저 근데 한글 먼저를 왜하지? 검색어가 어차피 한글로 치거나 영어로 칠텐데 둘중 하난데
-// getElementById 로 통일
-// 같은 내용 안놓치고 변수로.
-
-// interfaces
-
-// let user1: isUser;
-// let user2: isUser;
-// let allUsers: isUser[] = [];
-// allUsers.push(user1); allUsers.push(user2);
-
 const form: HTMLElement = document.getElementById("form");
-const local: HTMLElement = document.getElementById("local");
-let fav: HTMLElement;
 
 let userImage: string = "";
 let userName: string = "";
 let userData: any;
+let url: string = "https://api.github.com/";
 let user: IsUser;
 let userAll: IsUser[] = [];
 
-//user 객채 변수에 이름과 이미지(url)을 넣기
-//맵 메소드로 userAll 배열에 다 푸쉬해줌
-//버튼 클릭시, save / delete 기능인데.
-//지금 이걸 어떻게 찾아가야되는지 모르겠음 조건을.
-
-//해시테이블로, 
-
-// function saveUserData(e) {
-//   const username: string | number = (<HTMLInputElement>document.getElementById("username")).value;
-//   const userOther = document.getElementById('userOther').value;
-
-//   if (!userName || !userOther) {
-//     alert('Please fill in the form');
-//     return false;
-//   }
-
-//   // 검색어 Validate는 따로.
-
-//   let userData = {
-//     name: userName,
-//     url: userOther
-//   }
-
-//   if (localStorage.getItem('userDatas') === null) {
-//     //init array
-//     let userDatas = [];
-//     userDatas.push(userData);
-//     //set to localstorage
-//     localStorage.setItem("userDatas", JSON.stringify(userDatas));
-//   } else {
-//     // Get userDatas from localstorage
-//     let userDatas = JSON.parse(localStorage.getItem('userDatas'));
-//     // Add Userdata to array
-//     userDatas.push(userData);
-//     // Re-set back to localstorage
-//     localStorage.setItem("userDatas", JSON.stringify(userDatas));
-//   }
-
-//   // Clear form
-//   document.getElementById('myForm').reset();
-
-//   // Re-fetch userDatas
-//   fetchUserDatas();
-
-//   e.preventDefault();
-// }
-
-// // Delete userData
-// function deleteUserData() {
-//   // Get userDatas from localstorage
-//   let userDatas = JSON.parse(localStorage.getItem('userDatas'));
-//   // Loop throught userDatas
-//   for (let i = 0; i < userDatas.length; i++) {
-//     if (userDatas[i].url === url) {
-//       // Remove from array
-//       userDatas.splice(i, 1);
-//     }
-//   }
-//   localStorage.setItem("userDatas", JSON.stringify(userDatas));
-
-//   // Re-fetch userDatas
-//   fetchUserDatas();
-// }
-
-// function fetchUserDatas() {
-//   // Get userDatas from localstorage
-//   // <body onload="fetchUserDatas()>"
-//   let userDatas = JSON.parse(localStorage.getItem('userDatas'));
-
-//   // Get output id
-//   let userDatasResults = document.getElementById('userDatasResults');
-//   // Build output
-//   userDatasResults.innerHTML = '';
-//   for (let i = 0; i < userDatas.length; i++) {
-//     let name = userDatas[i].name;
-//     let url = userDatas[i].url;
-
-//     userDatasResults.innerHTML +=
-//       '<div class="well">' +
-//       '<h3>' + name +
-//       ' <a class="btn btn-default" target="_blank" href="' + url + '">Visit</a>' +
-//       ' <a onclick="deleteUserData(\'' + url + '\')" class="btn btn-danger" href="#">Delete</a>' +
-//       '</h3>' +
-//       '</div>';
-//   }
-// }
-
-// form.addEventListener("submit", function (e): void {
-//   e.preventDefault();
-
-//   // if (typeof (localStorage) === "undefined") {
-//   //   alert("현재 웹 환경에서 작동이 제한적입니다. 크롬 혹은 다른 브라우저에서 접속해주시기 바랍니다");
-//   // }
-
-//   getUserData().then((data: any) => {
-//     userData = data.items;
-//   })
-//   getUserNameAndImage();
-// })
 form.addEventListener("submit", getUserData);
-// 즐겨찾기 저장..
-
 
 async function getUserData(e: any): Promise<void> {
   e.preventDefault();
-  document.getElementById("result").innerHTML = "";
+  document.getElementById("result").textContent = "";
   const username: string | number = (<HTMLInputElement>document.getElementById("username")).value;
+
   try {
-    const response = await fetch("https://api.github.com/search/users?q=" + username + "+in:name&per_page=100", new AppRequestInit());
+    const response = await fetch(url + "search/users?q=" + username + "+in:name&per_page=100", new AppRequestInit());
     const data = await response.json();
     userData = data.items;
   } catch (err) {
-    err = "서버와의 연결에 실패했습니다";
+    err = "서버와의 연결에 실패했습니다.";
     alert(err);
   }
 
   getUserNameAndImage();
-  // .then((result: Response) => result.json())
-  // .then((data: any) => {
-  //   // console.log(data);
-
-  //   userData = data.items;
-  //   console.log(userData);
-  // })
 }
-// function getUserData() {
-//   document.getElementById("result").innerHTML = "";
-//   const username: string | number = (<HTMLInputElement>document.getElementById("username")).value;
 
-//   fetch("https://api.github.com/search/users?q=" + username + "+in:name&per_page=100", new AppRequestInit())
-//     .then((result: Response) => result.json())
-//     .then((data: any) => {
-//       // console.log(data);
-
-//       userData = data.items;
-//       console.log(userData);
-//     })
-// }
-
-//검색시 로컬스토리지에 데이터를 탐색해 해당 데이터 있을 경우
-//별 버튼 색상 변경해 출력
-//
-
-
-// api를 받아와서, 
-function getUserNameAndImage() {
+function getUserNameAndImage(): void {
   userData.map((item: any) => {
-    userImage = `<a target="_blank" href="${item.html_url}"><img class="rounded-circle" width="80" height="80" src="${item.avatar_url}"/></a>`;
     userName = item.login;
+    userImage = `<a target="_blank" href="${item.html_url}"><img class="rounded-circle" width="80" height="80" src="${item.avatar_url}"/></a>`;
 
     let imageSpan: HTMLSpanElement = document.createElement("div");
     imageSpan.className = "row result-wrapper pt-3 pb-3";
@@ -191,14 +44,11 @@ function getUserNameAndImage() {
     imageSpanChild.innerHTML = userImage;
     imageSpan.appendChild(imageSpanChild);
 
-    fetch("https://api.github.com/users/" + userName, new AppRequestInit())
+    fetch(url + "users/" + userName, new AppRequestInit())
       .then((nameResult: Response) => nameResult.json())
       .then((nameData: any) => {
-        // console.log(nameData);
-
         userName = nameData.name;
         localStorage.name = JSON.stringify(userName);
-        // console.log(userName);
 
         let nameWrapper: HTMLSpanElement = document.createElement("span");
         nameWrapper.className = "col-7 result-name";
@@ -207,31 +57,26 @@ function getUserNameAndImage() {
         let nameSpanChild: Text = document.createTextNode(userName);
         nameSpan.appendChild(nameSpanChild);
         nameWrapper.appendChild(nameSpan);
-
         imageSpan.appendChild(nameWrapper);
-
-        // let favStarInput: HTMLInputElement = document.createElement("input");
-        // favStarInput.type = "hidden";
-        // favStarInput.name = "rating";
-        // favStarInput.id = "rating";
-
-        // let favStarUl: HTMLUListElement = document.createElement("ul");
-
+        const hash = (username: string) => username.length;
         let favStarLi: HTMLLIElement = document.createElement("li");
         favStarLi.className = "col-2 fav";
         const starWithUserName = `${userName}-star`;
         favStarLi.id = starWithUserName;
-        favStarLi.onclick = () => starEvent(userName);
+        favStarLi.setAttribute('src', item.avatar_url);
+        if (!localStorage.userAll) {
+          localStorage.userAll = JSON.stringify([]);
+        }
+        const userArr = JSON.parse(localStorage.userAll);
+
+        if (userArr[hash(userName)] && userName in userArr[hash(userName)]) {
+          favStarLi.classList.add('sub');
+        }
+        favStarLi.onclick = (e) => starEvent(e);
 
         let favStarLiChild: Text = document.createTextNode("★");
         favStarLi.appendChild(favStarLiChild);
-        fav = favStarLi;
-
-        // favStarUl.appendChild(favStarLi);
-
-        // imageSpan.appendChild(favStarInput);
         imageSpan.appendChild(favStarLi);
-
         let result: HTMLElement = document.getElementById("result");
         result.appendChild(imageSpan);
 
@@ -255,15 +100,28 @@ function getUserNameAndImage() {
           nameSpan.style.color = "black";
         }
 
-        function starEvent(userName: any) {
-          // 버튼을 누르면 해당 칸의 사람이 저장되는 것 (이름, url)
-          // 
-          // let a = document.getElementById(`#"${userName}"`)
-          return console.log(userName);
-          // 한글 우선
-          // 영어
-          // 그리고 기타
-          // 
+        function starEvent(e: any) {
+          const uName = e.target.id.replace('-star', '');
+
+          let userList = JSON.parse(localStorage.userAll);
+          const index = hash(uName);
+          let tag = document.getElementById(e.target.id);
+          const url = tag.getAttribute('src');
+          tag.classList.add('sub');
+          if (userList[index] && uName in userList[index]) {
+            tag.classList.remove('sub');
+            delete userList[index][uName];
+            localStorage.userAll = JSON.stringify(userList);
+
+          } else {
+            if (userList[index]) {
+              userList[index][uName] = { username: uName, url: url };
+              localStorage.userAll = JSON.stringify(userList);
+            } else {
+              userList[index] = { [uName]: { username: uName, url: url } };
+              localStorage.userAll = JSON.stringify(userList);
+            }
+          }
         }
       })
       .catch((err: any) => {
@@ -347,30 +205,3 @@ function changeTitle(): void {
     previousHeader.style.display = "none";
   }
 }
-
-
-// local.addEventListener("submit", function (e) {
-//   e.preventDefault();
-//   a();
-
-//   function a() {
-//     console.log(userData);
-//     console.log(111);
-//   }
-
-// fav.onclick = function (e) {
-//   e.preventDefault();
-// }
-
-// function currentAddFav() {
-
-// }
-// // })
-// local.onclick = function (e) {
-//   e.preventDefault();
-
-// }
-// function a() {
-//   local.click();
-// }
-
