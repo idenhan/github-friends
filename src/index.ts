@@ -2,16 +2,15 @@
 import "../public/styles.css";
 import * as _ from "lodash";
 import AppRequestInit from "./Classes/appRequestInit";
-import IsUser from "./Interfaces/isUser";
 
 const form: HTMLElement = document.getElementById("form");
+const api: HTMLElement = document.getElementById("api");
+const local: HTMLElement = document.getElementById("local");
 
 let userImage: string = "";
 let userName: string = "";
 let userData: any;
 let url: string = "https://api.github.com/";
-let user: IsUser;
-let userAll: IsUser[] = [];
 
 form.addEventListener("submit", getUserData);
 
@@ -24,9 +23,9 @@ async function getUserData(e: any) {
     const response = await fetch(url + "search/users?q=" + username + "+in:name&per_page=100", new AppRequestInit());
     const data = await response.json();
     userData = data.items;
+    console.log(userData);
+    console.log(data);
 
-    // const sortedUserInfo = data.sort(hangulFirstCompare);
-    // console.log(sortedUserInfo);
   } catch (err) {
     err = "서버와의 연결에 실패했습니다.";
     alert(err);
@@ -157,6 +156,29 @@ function getUserNameAndImage(): void {
         alert(err);
       })
   })
+}
+
+api.onclick = (e) => apiEvent(e);
+local.onclick = (e) => localEvent(e);
+
+function apiEvent(e: any) {
+  let result = document.getElementById("result");
+  result.style.display = "inline";
+
+  let result2 = document.getElementById("result2");
+  result2.style.display = "none";
+}
+
+function localEvent(e: any) {
+  let result2 = document.getElementById("result2");
+  result2.style.display = "inline";
+
+  let result = document.getElementById("result");
+  result.style.display = "none";
+
+  if (!localStorage.userAll) {
+    alert('새로운 친구를 추가해보세요!');
+  }
 }
 
 let triggerNum: number = 0;
