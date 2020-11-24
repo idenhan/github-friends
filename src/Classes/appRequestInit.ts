@@ -1,5 +1,6 @@
 import { MY_TOKEN_NUMBERS } from "../Constants/apiConstants";
 
+// Get and Set the API key up because the Search API has custom rate limit rules.
 export default class AppRequestInit {
   public method: string = "GET";
   public headers: Headers = new Headers();

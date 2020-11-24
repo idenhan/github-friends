@@ -3,6 +3,7 @@ import "../public/styles.css";
 import * as _ from "lodash";
 import AppRequestInit from "./Classes/appRequestInit";
 
+// Declare variables globally
 const form: HTMLElement = document.getElementById("form");
 const api: HTMLElement = document.getElementById("api");
 const local: HTMLElement = document.getElementById("local");
@@ -12,15 +13,15 @@ let userName: string = "";
 let userData: any;
 let url: string = "https://api.github.com/";
 
+// Function getUserData works when users click the search button
 form.addEventListener("submit", getUserData);
-
+// Get user data from Github api
 async function getUserData(e: any) {
+  // Prevent event bubbling
   e.preventDefault();
 
   const username: string | number = (<HTMLInputElement>document.getElementById("username")).value;
-
-
-
+  // Get Data searched less than 100
   try {
     const response = await fetch(url + "search/users?q=" + username + "+in:name&per_page=100", new AppRequestInit());
     const data = await response.json();
@@ -36,31 +37,32 @@ async function getUserData(e: any) {
   getUserNameAndImage();
 }
 
-const hangulFirstCompare = (a: any, b: any) => {
-  function addOrderPrefix(s: string) {
-    var code = s.replace(/ /gi, "").toLowerCase().charCodeAt(0);
-    var prefix;
-    // 한글 AC00—D7AF
-    if (0xac00 <= code && code <= 0xd7af) prefix = '1';
-    // 한글 자모 3130—318F
-    else if (0x3130 <= code && code <= 0x318f) prefix = '2';
-    // 영어 소문자 0061-007A
-    else if (0x61 <= code && code <= 0x7a) prefix = '3';
-    // 그외
-    else prefix = '9';
-    return prefix + s;
-  }
-  a = addOrderPrefix(a.name);
-  b = addOrderPrefix(b.name);
-  if (a < b) {
-    return -1
-  }
-  if (a > b) {
-    return 1
-  }
-  return 0;
-}
+// const hangulFirstCompare = (a: any, b: any) => {
+//   function addOrderPrefix(s: string) {
+//     var code = s.replace(/ /gi, "").toLowerCase().charCodeAt(0);
+//     var prefix;
+//     // 한글 AC00—D7AF
+//     if (0xac00 <= code && code <= 0xd7af) prefix = '1';
+//     // 한글 자모 3130—318F
+//     else if (0x3130 <= code && code <= 0x318f) prefix = '2';
+//     // 영어 소문자 0061-007A
+//     else if (0x61 <= code && code <= 0x7a) prefix = '3';
+//     // 그외
+//     else prefix = '9';
+//     return prefix + s;
+//   }
+//   a = addOrderPrefix(a.name);
+//   b = addOrderPrefix(b.name);
+//   if (a < b) {
+//     return -1
+//   }
+//   if (a > b) {
+//     return 1
+//   }
+//   return 0;
+// }
 
+// Get all searched user's real name and image url then print them on browser
 function getUserNameAndImage(): void {
   let a = document.querySelector("#result");
   let b = document.getElementById("container");
@@ -71,7 +73,7 @@ function getUserNameAndImage(): void {
 
   userData.map((item: any) => {
     userName = item.login;
-
+    // Get users image urls
     userImage = `<a target="_blank" href="${item.html_url}"><img class="rounded-circle" width="80" height="80" src="${item.avatar_url}"/></a>`;
 
     let imageSpan: HTMLSpanElement = document.createElement("div");
@@ -81,6 +83,7 @@ function getUserNameAndImage(): void {
     imageSpanChild.innerHTML = userImage;
     imageSpan.appendChild(imageSpanChild);
 
+    // Get users real names
     fetch(url + "users/" + userName, new AppRequestInit())
       .then((nameResult: Response) => nameResult.json())
       .then((nameData: any) => {
@@ -124,7 +127,7 @@ function getUserNameAndImage(): void {
 
         nameSpan.addEventListener("mousemove", moveEvent);
         nameSpan.addEventListener("mouseleave", leaveEvent)
-
+        // nameSpan's background color changes dependinng on mouse moves.
         function moveEvent(e: any): void {
           e.stopPropagation();
           e.preventDefault();
@@ -138,7 +141,7 @@ function getUserNameAndImage(): void {
           nameSpan.style.backgroundColor = "white";
           nameSpan.style.color = "black";
         }
-
+        // Set up star button to control its sibling values
         function starEvent(e: any) {
           const uName = e.target.id.replace('-star', '');
 
@@ -173,6 +176,7 @@ function getUserNameAndImage(): void {
 api.onclick = (e) => apiEvent(e);
 local.onclick = (e) => localEvent(e);
 
+// Show api results and doesn't show local results when its clicked
 function apiEvent(e: any) {
   let result = document.getElementById("result");
   result.style.display = "inline";
@@ -182,7 +186,7 @@ function apiEvent(e: any) {
 
 }
 
-
+// Show local results and doesn't show api results when its clicked
 function localEvent(e: any) {
   let result2 = document.getElementById("result2");
   result2.style.display = "inline";
@@ -198,7 +202,7 @@ function localEvent(e: any) {
   });
   console.log(favArr);
 
-
+  // init result2
   let b2 = document.getElementById("container");
   b2.removeChild(result2);
   let c2 = document.createElement("div");
@@ -268,15 +272,13 @@ function localEvent(e: any) {
       }
     }
   })
-
-
-
+  // Alert message when there is no data added in Local
   if (!localStorage.userAll) {
     alert('새로운 친구를 추가해보세요!');
   }
-
 }
 
+// Change Main title when users start to type in seach bar
 let triggerNum: number = 0;
 let textInput: HTMLElement = document.querySelector('input[type="text"]');
 textInput.addEventListener("input", trigger);
