@@ -15,21 +15,49 @@ let userAll: IsUser[] = [];
 
 form.addEventListener("submit", getUserData);
 
-async function getUserData(e: any): Promise<void> {
+async function getUserData(e: any) {
   e.preventDefault();
-  document.getElementById("result").textContent = "";
+
   const username: string | number = (<HTMLInputElement>document.getElementById("username")).value;
 
   try {
     const response = await fetch(url + "search/users?q=" + username + "+in:name&per_page=100", new AppRequestInit());
     const data = await response.json();
     userData = data.items;
+
+    // const sortedUserInfo = data.sort(hangulFirstCompare);
+    // console.log(sortedUserInfo);
   } catch (err) {
     err = "서버와의 연결에 실패했습니다.";
     alert(err);
   }
 
   getUserNameAndImage();
+}
+
+const hangulFirstCompare = (a: any, b: any) => {
+  function addOrderPrefix(s: string) {
+    var code = s.replace(/ /gi, "").toLowerCase().charCodeAt(0);
+    var prefix;
+    // 한글 AC00—D7AF
+    if (0xac00 <= code && code <= 0xd7af) prefix = '1';
+    // 한글 자모 3130—318F
+    else if (0x3130 <= code && code <= 0x318f) prefix = '2';
+    // 영어 소문자 0061-007A
+    else if (0x61 <= code && code <= 0x7a) prefix = '3';
+    // 그외
+    else prefix = '9';
+    return prefix + s;
+  }
+  a = addOrderPrefix(a.name);
+  b = addOrderPrefix(b.name);
+  if (a < b) {
+    return -1
+  }
+  if (a > b) {
+    return 1
+  }
+  return 0;
 }
 
 function getUserNameAndImage(): void {
