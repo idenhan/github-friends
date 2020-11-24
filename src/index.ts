@@ -2,7 +2,6 @@
 import "../public/styles.css";
 import * as _ from "lodash";
 import AppRequestInit from "./Classes/appRequestInit";
-import { result } from "lodash";
 
 const form: HTMLElement = document.getElementById("form");
 const api: HTMLElement = document.getElementById("api");
@@ -72,6 +71,7 @@ function getUserNameAndImage(): void {
 
   userData.map((item: any) => {
     userName = item.login;
+
     userImage = `<a target="_blank" href="${item.html_url}"><img class="rounded-circle" width="80" height="80" src="${item.avatar_url}"/></a>`;
 
     let imageSpan: HTMLSpanElement = document.createElement("div");
@@ -101,6 +101,8 @@ function getUserNameAndImage(): void {
         const starWithUserName = `${userName}-star`;
         favStarLi.id = starWithUserName;
         favStarLi.setAttribute('src', item.avatar_url);
+        favStarLi.setAttribute('username', userName);
+
         if (!localStorage.userAll) {
           localStorage.userAll = JSON.stringify([]);
         }
@@ -204,8 +206,11 @@ function localEvent(e: any) {
   b2.appendChild(c2);
 
   favArr.map((el: any) => {
+
     const hash = (username: string) => username.length;
+
     for (let i in el) {
+
       userImage = `<a target="_blank" href="#"><img class="rounded-circle" width="80" height="80" src="${el[i].url}"/></a>`;
 
       let imageSpan: HTMLSpanElement = document.createElement("div");
@@ -253,6 +258,8 @@ function localEvent(e: any) {
       newResult.removeChild(tagWrapper);
       let userList = JSON.parse(localStorage.userAll);
       const index = hash(uName);
+      let testtest = document.querySelector(`#result  [id*="${uName}"]`);
+      testtest.classList.remove("sub");
 
       if (userList[index] && uName in userList[index]) {
 
