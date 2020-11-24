@@ -137,14 +137,19 @@ form.addEventListener("submit", getUserData);
 // 즐겨찾기 저장..
 
 
-async function getUserData(e: any) {
+async function getUserData(e: any): Promise<void> {
   e.preventDefault();
   document.getElementById("result").innerHTML = "";
   const username: string | number = (<HTMLInputElement>document.getElementById("username")).value;
+  try {
+    const response = await fetch("https://api.github.com/search/users?q=" + username + "+in:name&per_page=100", new AppRequestInit());
+    const data = await response.json();
+    userData = data.items;
+  } catch (err) {
+    err = "서버와의 연결에 실패했습니다";
+    alert(err);
+  }
 
-  const response = await fetch("https://api.github.com/search/users?q=" + username + "+in:name&per_page=100", new AppRequestInit());
-  const data = await response.json();
-  userData = data.items;
   getUserNameAndImage();
   // .then((result: Response) => result.json())
   // .then((data: any) => {
@@ -178,7 +183,6 @@ function getUserNameAndImage() {
   userData.map((item: any) => {
     userImage = `<a target="_blank" href="${item.html_url}"><img class="rounded-circle" width="80" height="80" src="${item.avatar_url}"/></a>`;
     userName = item.login;
-    console.log(userName);
 
     let imageSpan: HTMLSpanElement = document.createElement("div");
     imageSpan.className = "row result-wrapper pt-3 pb-3";
@@ -252,10 +256,19 @@ function getUserNameAndImage() {
         }
 
         function starEvent(userName: any) {
-
-          return console.log(this);
-
+          // 버튼을 누르면 해당 칸의 사람이 저장되는 것 (이름, url)
+          // 
+          // let a = document.getElementById(`#"${userName}"`)
+          return console.log(userName);
+          // 한글 우선
+          // 영어
+          // 그리고 기타
+          // 
         }
+      })
+      .catch((err: any) => {
+        err = "서버와의 연결에 실패했습니다";
+        alert(err);
       })
   })
 }
@@ -264,7 +277,7 @@ let triggerNum: number = 0;
 let textInput: HTMLElement = document.querySelector('input[type="text"]');
 textInput.addEventListener("input", trigger);
 
-function trigger() {
+function trigger(): void {
   triggerNum++;
   changeTitle();
 }
