@@ -75,9 +75,9 @@ li:hover {
   text-shadow: 0 0 1px gold;
 }
 
-@media ( min-width: 768px) {}
+/* @media ( min-width: 768px) {}
 
-@media ( min-width: 1024px) {}
+@media ( min-width: 1024px) {} */
 
 #title-root span {
   color: #262626;
