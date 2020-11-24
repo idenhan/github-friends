@@ -92,6 +92,7 @@ function getUserNameAndImage(): void {
         favStarLi.id = starWithUserName;
         favStarLi.setAttribute('src', item.avatar_url);
         favStarLi.setAttribute('username', userName);
+        favStarLi.setAttribute('link', item.html_url);
 
         if (!localStorage.userAll) {
           localStorage.userAll = JSON.stringify([]);
@@ -175,9 +176,9 @@ function getUserNameAndImage(): void {
           const uName = tagCatch.getAttribute('username');
           let userList = JSON.parse(localStorage.userAll);
           const index = hash(uName);
-
           let tag = document.getElementById(e.target.id);
           const url = tag.getAttribute('src');
+          const link = tag.getAttribute('link');
           tag.classList.add('sub');
 
           if (userList[index] && item.login in userList[index]) {
@@ -186,10 +187,10 @@ function getUserNameAndImage(): void {
             localStorage.userAll = JSON.stringify(userList);
           } else {
             if (userList[index]) {
-              userList[index][item.login] = { username: uName, url: url, id: item.login, dictIndex: index };
+              userList[index][item.login] = { username: uName, url: url, id: item.login, dictIndex: index, link: link };
               localStorage.userAll = JSON.stringify(userList);
             } else {
-              userList[index] = { [item.login]: { username: uName, url: url, id: item.login, dictIndex: index } };
+              userList[index] = { [item.login]: { username: uName, url: url, id: item.login, dictIndex: index, link: link } };
               localStorage.userAll = JSON.stringify(userList);
             }
           }
@@ -258,7 +259,7 @@ function localEvent(e: any) {
         dictDiv.innerText = String.fromCharCode(el[i].dictIndex).toUpperCase();
       }
 
-      userImage = `<a target="_blank" href="#"><img class="rounded-circle" width="80" height="80" src="${el[i].url}"/></a>`;
+      userImage = `<a target="_blank" href="${el[i].link}"><img class="rounded-circle" width="80" height="80" src="${el[i].url}"/></a>`;
 
       let imageSpan: HTMLSpanElement = document.createElement("div");
       imageSpan.className = "row result-wrapper pt-3 pb-3";
