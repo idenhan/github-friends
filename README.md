@@ -21,7 +21,7 @@ yarn build
 
 ## DEMO
 
-[Click Here!](http://momsitter.s3-website-us-east-1.amazonaws.com/)
+- [Click Here!](http://momsitter.s3-website-us-east-1.amazonaws.com/)
 
 ## Author
 
