@@ -29,7 +29,7 @@ yarn build
 
 ## DEMO
 
-- [Click Here!](http://momsitter.s3-website-us-east-1.amazonaws.com/)
+- [Click Here!](https://bit.ly/2J8Nb73)
 
 ## Author
 
