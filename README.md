@@ -1,6 +1,6 @@
 # Github Friends
 
-This project is a Mobile Web Application which is also responsive and work in desktop environment. It was created with using HTML, CSS and mostly pure vanilla Javascript DOM and Typescript.
+This project is a Mobile Web Application which is also responsive like working in desktop environment. It was created with using HTML, CSS and mostly pure vanilla Javascript DOM and Typescript.
 
 ## 안내 사항
 
